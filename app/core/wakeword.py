@@ -9,7 +9,7 @@ from vosk import Model, KaldiRecognizer
 import json
 
 # === CONFIG ===
-WAKEWORD = "jarvis"
+WAKEWORD = "blueberry"
 LISTEN_DURATION = 5  # seconds to listen after wake word
 VOSK_MODEL_PATH = "models/vosk-model-small-en-us-0.15"
 
