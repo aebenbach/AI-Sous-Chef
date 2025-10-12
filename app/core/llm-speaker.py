@@ -48,8 +48,8 @@ if __name__ == "__main__":
     test_recipe = "Boil pasta for 8 minutes"
     speaker = LLMSpeaker(test_recipe)
 
-    resp = speaker.q_and_a_callback("What does the recipe say to do?")
+    speaker.q_and_a_callback("What does the recipe say to do?")
 
-    resp = speaker.q_and_a_callback("Anything else?")
+    speaker.q_and_a_callback("Anything else?")
     
 

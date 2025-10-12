@@ -88,7 +88,7 @@ class SpeechManager:
         else:
             transcribed_text = self.recognizer.PartialResult()
             self.recognizer.Result()
-
+        print("Transcribed Text:", transcribed_text)
         return transcribed_text
 
 if __name__ == "__main__":
