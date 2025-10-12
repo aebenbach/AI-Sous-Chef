@@ -12,13 +12,15 @@ class SpeechManager:
     LISTEN_DURATION=5
     VOSK_MODEL_PATH="models/vosk-model-small-en-us-0.15"
 
-    def __init__(self):
+    def __init__(self, trancscription_call_back):
 
         self.audio_q = queue.Queue()
         self.porcupine = None
         self.vosk_model = None
         self.recognizer = None
         self.stream = None
+
+        self.trancscription_call_back = trancscription_call_back
 
     def __enter__(self):
         # Initialize Porcupine
@@ -61,10 +63,11 @@ class SpeechManager:
 
             if result >= 0:
                 print(f"✅ Wake word '{self.WAKEWORD}' detected!")
-                self.transcribe()
+                transcribed_text = self.transcribe()
+                self.trancscription_call_back(transcribed_text)
                 print(f"\nListening again for wake word: '{self.WAKEWORD}'...")
 
-    def transcribe(self):
+    def transcribe(self) -> str:
         print("🎤 Listening for speech...")
         recorded = []
         start_time = time.time()
@@ -80,14 +83,18 @@ class SpeechManager:
 
         if self.recognizer.AcceptWaveform(audio_bytes):
             result = json.loads(self.recognizer.Result())
-            print("📝 Transcription:", result.get("text", ""))
+            transcribed_text = result.get("text", "")
+
         else:
-            print("📝 Partial:", self.recognizer.PartialResult())
+            transcribed_text = self.recognizer.PartialResult()
             self.recognizer.Result()
 
+        return transcribed_text
+
 if __name__ == "__main__":
+    print_text = lambda txt : print(txt)
     try:
-        with SpeechManager() as listener:
+        with SpeechManager(print_text) as listener:
             listener.listen()
     except KeyboardInterrupt:
         print("Exiting...")
