@@ -2,9 +2,8 @@ from app.core.pdf_to_markdown import PDFToMarkdown
 from app.core.speech_manager import SpeechManager
 from app.core.llm_speaker import LLMSpeaker
 
-def main():
+def main(file):
     reader = PDFToMarkdown()
-    file = "Garlic Noodles"
     print("Converting Recipe")
     recipe = reader.pdf_to_md(file)
 
@@ -19,4 +18,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    main("Garlic Noodles")
