@@ -76,11 +76,12 @@ class PDFToMarkdown():
         with open(f'{self.MD_BASE}/{file}.md', "w", encoding="utf-8") as f:
             f.write(text)
 
-    def pdf_to_md(self, file: str):
+    def pdf_to_md(self, file: str) -> str:
 
         file_id = self._upload_pdf(file)
         markdown_text = self._extract_txt(file_id)
         self._save_as_md(markdown_text, file)
+        return markdown_text
 
 if __name__ == "__main__":
     reader = PDFToMarkdown()
