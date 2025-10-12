@@ -92,9 +92,19 @@ class SpeechManager:
         return transcribed_text
 
 if __name__ == "__main__":
-    print_text = lambda txt : print(txt)
+
+    import pyttsx3
+
+    
+
+    def say_text(txt):
+        print("Transcribed Text:", txt)
+        engine = pyttsx3.init()
+        engine.say(txt)
+        engine.runAndWait()
+
     try:
-        with SpeechManager(print_text) as listener:
+        with SpeechManager(say_text) as listener:
             listener.listen()
     except KeyboardInterrupt:
         print("Exiting...")
