@@ -64,6 +64,7 @@ def transcribe_with_vosk():
         print("📝 Transcription:", result.get("text", ""))
     else:
         print("📝 Partial:", recognizer.PartialResult())
+        recognizer.Result()
 
 # === Main ===
 if __name__ == "__main__":
