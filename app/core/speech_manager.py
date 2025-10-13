@@ -8,7 +8,7 @@ from vosk import Model, KaldiRecognizer
 import json
 
 class SpeechManager:
-    WAKEWORD="computer"
+    WAKEWORD="jarvis"
     LISTEN_DURATION=5
     VOSK_MODEL_PATH="models/vosk-model-en-us-0.22"
 
