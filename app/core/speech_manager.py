@@ -8,9 +8,9 @@ from vosk import Model, KaldiRecognizer
 import json
 
 class SpeechManager:
-    WAKEWORD="blueberry"
+    WAKEWORD="computer"
     LISTEN_DURATION=5
-    VOSK_MODEL_PATH="models/vosk-model-small-en-us-0.15"
+    VOSK_MODEL_PATH="models/vosk-model-en-us-0.22"
 
     def __init__(self, trancscription_call_back):
 
