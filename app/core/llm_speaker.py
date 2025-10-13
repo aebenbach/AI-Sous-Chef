@@ -34,6 +34,7 @@ class LLMSpeaker:
 
     def _say_text(self, txt: str):
         engine = pyttsx3.init()
+        engine.setProperty('rate', 165)
         engine.say(txt)
         engine.runAndWait()
 
