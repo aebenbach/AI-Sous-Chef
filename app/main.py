@@ -18,4 +18,4 @@ def main(file):
 
 
 if __name__ == '__main__':
-    main("Garlic Noodles")
+    main("Coconut Chicken")
