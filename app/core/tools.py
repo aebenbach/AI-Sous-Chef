@@ -1,12 +1,10 @@
 import os 
 
-from fastmcp import FastMCP
+from langchain.tools import tool
 
 NOTES_PATH = "recipes/notes"
 
-mcp = FastMCP("Cooking Tools")
-
-@mcp.tool
+@tool
 def add_note(recipe: str, note: str) -> None:
     """
     Saves a note on a recipe
@@ -27,7 +25,7 @@ def add_note(recipe: str, note: str) -> None:
         print(f"something went wrong: {e}")
         raise            
 
-@mcp.tool
+@tool
 def read_notes(recipe: str) -> str:
     """Returns all notes for a recipe"""
     try:
@@ -42,7 +40,4 @@ def read_notes(recipe: str) -> str:
     except Exception as e:
         print(f"something went wrong: {e}")
         raise         
-
-if __name__ == "__main__":
-    mcp.run()
 
