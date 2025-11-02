@@ -18,4 +18,13 @@ def main(file):
 
 
 if __name__ == '__main__':
-    main("Coconut Chicken")
+    from dotenv import load_dotenv
+    import argparse
+
+    load_dotenv()
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--recipe", required=True)
+    args = parser.parse_args()
+
+    main(args.recipe)
