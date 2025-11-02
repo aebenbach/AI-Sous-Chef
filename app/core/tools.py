@@ -1,11 +1,15 @@
 import os 
+from contextvars import ContextVar
 
 from langchain.tools import tool
 
 NOTES_PATH = "recipes/notes"
 
+# Tools context 
+active_recipe = ContextVar('recipe')
+
 @tool
-def add_note(recipe: str, note: str) -> None:
+def add_note(note: str) -> None:
     """
     Saves a note on a recipe
 
@@ -16,7 +20,7 @@ def add_note(recipe: str, note: str) -> None:
     try:
         os.makedirs(NOTES_PATH, exist_ok=True) 
 
-        file_path = os.path.join(NOTES_PATH, f"{recipe}.txt")
+        file_path = os.path.join(NOTES_PATH, f"{active_recipe.get()}.txt")
 
         with open(file_path, "a", encoding="utf-8") as f:
             f.write(f"• {note}\n")
@@ -26,11 +30,11 @@ def add_note(recipe: str, note: str) -> None:
         raise            
 
 @tool
-def read_notes(recipe: str) -> str:
+def read_notes() -> str:
     """Returns all notes for a recipe"""
     try:
 
-        file_path = os.path.join(NOTES_PATH, f"{recipe}.txt")
+        file_path = os.path.join(NOTES_PATH, f"{active_recipe.get()}.txt")
 
         with open(file_path, "r", encoding="utf-8") as f:
             notes = f.read()

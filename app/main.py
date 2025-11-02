@@ -1,8 +1,11 @@
 from app.core.pdf_to_markdown import PDFToMarkdown
 from app.core.speech_manager import SpeechManager
 from app.core.llm_speaker import LLMSpeaker
+from app.core.tools import active_recipe
 
 def main(file):
+    active_recipe.set(file)
+    
     reader = PDFToMarkdown()
     print("Converting Recipe")
     recipe = reader.pdf_to_md(file, overwrite=False)
