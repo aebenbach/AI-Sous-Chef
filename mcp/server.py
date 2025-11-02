@@ -2,17 +2,47 @@ import os
 
 from fastmcp import FastMCP
 
+NOTES_PATH = "recipes/notes"
+
 mcp = FastMCP("Cooking Tools")
 
 @mcp.tool
 def add_note(recipe: str, note: str) -> None:
-    NOTES_PATH = "recipes/notes"
-    os.makedirs(NOTES_PATH, exist_ok=True) 
+    """
+    Saves a note on a recipe
 
-    file_path = os.path.join(NOTES_PATH, f"{recipe}.txt")
+    recipe: Name of the recipe 
+    note: The note that should be saved
+    """
 
-    with open(file_path, "a", encoding="utf-8") as f:
-        f.write(f"• {note}\n")
+    try:
+        os.makedirs(NOTES_PATH, exist_ok=True) 
+
+        file_path = os.path.join(NOTES_PATH, f"{recipe}.txt")
+
+        with open(file_path, "a", encoding="utf-8") as f:
+            f.write(f"• {note}\n")
+
+    except Exception as e:
+        print(f"something went wrong: {e}")
+        raise            
+
+@mcp.tool
+def read_notes(recipe: str) -> str:
+    """Returns all notes for a recipe"""
+    try:
+
+        file_path = os.path.join(NOTES_PATH, f"{recipe}.txt")
+
+        with open(file_path, "r", encoding="utf-8") as f:
+            notes = f.read()
+
+        return notes
+
+    except Exception as e:
+        print(f"something went wrong: {e}")
+        raise         
 
 if __name__ == "__main__":
     mcp.run()
+
