@@ -20,6 +20,18 @@ class PDFToMarkdown():
             )
         file_id = file.id
         return file_id 
+    
+    def _read_md(self, file: str) -> str | None:
+        md_path = f'{self.MD_BASE}/{file}.md'
+        if not os.path.exists(md_path):
+            return None 
+        
+        with open(md_path, "r", encoding="utf-8") as f:
+            content = f.read()
+        
+        return content
+
+
 
     def _extract_txt(self, file_id: str) -> str:
         # TODO Responses API
@@ -76,7 +88,10 @@ class PDFToMarkdown():
         with open(f'{self.MD_BASE}/{file}.md', "w", encoding="utf-8") as f:
             f.write(text)
 
-    def pdf_to_md(self, file: str) -> str:
+    def pdf_to_md(self, file: str, overwrite: bool = True) -> str:
+        
+        if not overwrite and (markdown_text := self._read_md(file)):
+            return markdown_text
 
         file_id = self._upload_pdf(file)
         markdown_text = self._extract_txt(file_id)

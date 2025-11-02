@@ -5,7 +5,7 @@ from app.core.llm_speaker import LLMSpeaker
 def main(file):
     reader = PDFToMarkdown()
     print("Converting Recipe")
-    recipe = reader.pdf_to_md(file)
+    recipe = reader.pdf_to_md(file, overwrite=False)
 
     speaker = LLMSpeaker(recipe)
     callback = lambda text : speaker.q_and_a_callback(text)
