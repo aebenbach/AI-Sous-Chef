@@ -29,7 +29,7 @@ Unzip the model and place it in the `models/` directory.
 
 ## API Keys
 
-You’ll need API keys for both OpenAI and PicoVoice.
+You’ll need API keys for both [OpenAI](https://platform.openai.com/settings/organization/api-keys) and [PicoVoice](https://console.picovoice.ai/).
 Set them in a `.env` file:
 
 ```
