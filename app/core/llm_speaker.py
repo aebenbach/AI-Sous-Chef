@@ -1,9 +1,9 @@
 import pyttsx3
-from openai import OpenAI
 from langchain_openai import ChatOpenAI
-from langchain.messages import HumanMessage, AIMessage, SystemMessage
+from langchain.messages import HumanMessage, SystemMessage
 
 from app.config.prompts import SOUS_CHEF
+from app.core.tools import add_note, read_notes
 
 
 class LLMSpeaker:
@@ -11,7 +11,7 @@ class LLMSpeaker:
 
     def __init__(self, recipe: str):
         self.client = ChatOpenAI(model=self._MODEL)
-        # self.client = self.client.bind_tools(tools=[])
+        self.client = self.client.bind_tools(tools=[add_note, read_notes])
 
         self.system_prompt = SOUS_CHEF + recipe
         self.conversation_history: list = [
@@ -27,7 +27,8 @@ class LLMSpeaker:
             self.conversation_history.append(response)
 
         except Exception as e:
-            return f"API error: {e}"
+            print(e)
+            return f"I'm sorry, something went wrong with my response"
 
         return response.content
 
