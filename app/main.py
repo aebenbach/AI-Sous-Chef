@@ -3,14 +3,14 @@ from app.core.speech_manager import SpeechManager
 from app.core.llm_speaker import LLMSpeaker
 from app.core.tools import active_recipe
 
-def main(file):
-    active_recipe.set(file)
-    
+def main(recipe_name):
+    active_recipe.set(recipe_name)
+
     reader = PDFToMarkdown()
     print("Converting Recipe")
-    recipe = reader.pdf_to_md(file, overwrite=False)
+    recipe_content = reader.pdf_to_md(recipe_name, overwrite=False)
 
-    speaker = LLMSpeaker(recipe)
+    speaker = LLMSpeaker(recipe_content)
     callback = lambda text : speaker.q_and_a_callback(text)
 
     try:
