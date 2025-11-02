@@ -1,5 +1,6 @@
 import pyttsx3
 from langchain_openai import ChatOpenAI
+from langchain.agents import create_agent
 from langchain.messages import HumanMessage, SystemMessage
 
 from app.config.prompts import SOUS_CHEF
@@ -10,27 +11,31 @@ class LLMSpeaker:
     _MODEL: str = "gpt-4o"  
 
     def __init__(self, recipe: str):
-        self.client = ChatOpenAI(model=self._MODEL)
-        self.client = self.client.bind_tools(tools=[add_note, read_notes])
-
+        # self.client = ChatOpenAI(model=self._MODEL)
+        # self.client = self.client.bind_tools(tools=[add_note, read_notes])
         self.system_prompt = SOUS_CHEF + recipe
-        self.conversation_history: list = [
-            SystemMessage(self.system_prompt)
-        ]
+        self.client = create_agent(
+                ChatOpenAI(model=self._MODEL),
+                tools=[add_note, read_notes],
+                system_prompt=self.system_prompt,
+                )
+        
 
     def _get_response(self, prompt: str) -> str:
-        self.conversation_history.append(HumanMessage(prompt))
+        input = {"messages": [{"role": "user", "content": prompt}]}
 
+        response = None
         try:
-            response = self.client.invoke(self.conversation_history)
-
-            self.conversation_history.append(response)
+            response = self.client.invoke(input)
+            return response["messages"][-1].content
 
         except Exception as e:
+            from pprint import pprint
             print(e)
-            return f"I'm sorry, something went wrong with my response"
+            pprint(response)
+            return "I'm sorry, something went wrong with my response"
 
-        return response.content
+        
 
     def _say_text(self, txt: str):
         engine = pyttsx3.init()
