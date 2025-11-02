@@ -7,13 +7,13 @@ A cooking assistant that lets you talk to your recipe.
 Create and activate a virtual environment:
 
 ```bash
-python -m venv venv
+python -m venv .venv
 ```
 
 Install dependencies:
 
 ```bash
-pip install -r requirements.txt
+uv sync
 ```
 
 ## Speech Model

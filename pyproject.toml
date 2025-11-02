@@ -1,0 +1,14 @@
+[project]
+name="AI-Sous-Chef"
+version="0.0.0"
+requires-python=">=3.13"
+dependencies = [
+    "fastmcp>=2.13.0.2",
+    "numpy>=2.3.4",
+    "openai>=2.6.1",
+    "pvporcupine>=3.0.5",
+    "python-dotenv>=1.2.1",
+    "pyttsx3>=2.99",
+    "sounddevice>=0.5.3",
+    "vosk==0.3.44",
+]
