@@ -1,5 +1,8 @@
 import pyttsx3
 from openai import OpenAI
+from langchain_openai import ChatOpenAI
+from langchain.messages import HumanMessage, AIMessage, SystemMessage
+
 from app.config.prompts import SOUS_CHEF
 
 
@@ -7,30 +10,26 @@ class LLMSpeaker:
     _MODEL: str = "gpt-4o"  
 
     def __init__(self, recipe: str):
-        self.client = OpenAI()
+        self.client = ChatOpenAI(model=self._MODEL)
+        # self.client = self.client.bind_tools(tools=[])
+
         self.system_prompt = SOUS_CHEF + recipe
-        self.conversation_history: list[dict] = [
-            {"role": "system", "content": self.system_prompt}
+        self.conversation_history: list = [
+            SystemMessage(self.system_prompt)
         ]
 
     def _get_response(self, prompt: str) -> str:
-        self.conversation_history.append({"role": "user", "content": prompt})
+        self.conversation_history.append(HumanMessage(prompt))
 
         try:
-            response = self.client.chat.completions.create(
-                model=self._MODEL,
-                messages=self.conversation_history,
-                temperature=0.7,  # controls creativity
-                max_completion_tokens=500,  # replaces max_tokens
-            )
+            response = self.client.invoke(self.conversation_history)
 
-            output = response.choices[0].message.content
+            self.conversation_history.append(response)
 
         except Exception as e:
             return f"API error: {e}"
 
-        self.conversation_history.append({"role": "assistant", "content": output})
-        return output
+        return response.content
 
     def _say_text(self, txt: str):
         engine = pyttsx3.init()
