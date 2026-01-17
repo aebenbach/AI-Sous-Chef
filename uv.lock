@@ -14,6 +14,7 @@ dependencies = [
     { name = "pvporcupine" },
     { name = "python-dotenv" },
     { name = "pyttsx3" },
+    { name = "simpleaudio" },
     { name = "sounddevice" },
     { name = "vosk" },
 ]
@@ -27,6 +28,7 @@ requires-dist = [
     { name = "pvporcupine", specifier = ">=3.0.5" },
     { name = "python-dotenv", specifier = ">=1.2.1" },
     { name = "pyttsx3", specifier = ">=2.99" },
+    { name = "simpleaudio", specifier = ">=1.0.4" },
     { name = "sounddevice", specifier = ">=0.5.3" },
     { name = "vosk", specifier = "==0.3.44" },
 ]
@@ -3414,6 +3416,12 @@ sdist = { url = "https://files.pythonhosted.org/packages/f3/61/d7545dafb7ac2230c
 wheels = [
     { url = "https://files.pythonhosted.org/packages/3f/51/d4db610ef29373b879047326cbf6fa98b6c1969d6f6dc423279de2b1be2c/requests_toolbelt-1.0.0-py2.py3-none-any.whl", hash = "sha256:cccfdd665f0a24fcf4726e690f65639d272bb0637b9b92dfd91a5568ccf6bd06", size = 54481, upload-time = "2023-05-01T04:11:28.427Z" },
 ]
+
+[[package]]
+name = "simpleaudio"
+version = "1.0.4"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/94/1b/4dc29653733202b68c09d9c6ca085cf67ac54859ee860647ef21ac1ff3dc/simpleaudio-1.0.4.tar.gz", hash = "sha256:691c88649243544db717e7edf6a9831df112104e1aefb5f6038a5d071e8cf41d", size = 2042564, upload-time = "2019-11-29T03:56:28.965Z" }
 
 [[package]]
 name = "sniffio"
