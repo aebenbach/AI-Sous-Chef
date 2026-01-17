@@ -4,7 +4,7 @@ from langchain.agents import create_agent
 from langchain.messages import HumanMessage, AIMessage
 
 from app.config.prompts import SOUS_CHEF
-from app.core.tools import add_note, read_notes
+from app.core.tools import add_note, read_notes, set_timer
 
 
 class LLMSpeaker:
@@ -15,7 +15,7 @@ class LLMSpeaker:
         self.system_prompt = SOUS_CHEF + recipe
         self.client = create_agent(
                 ChatOpenAI(model=self._MODEL),
-                tools=[add_note, read_notes],
+                tools=[add_note, read_notes, set_timer],
                 system_prompt=self.system_prompt,
                 )
         self.conversation = []

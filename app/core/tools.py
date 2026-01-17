@@ -1,5 +1,7 @@
 import os 
 from contextvars import ContextVar
+import threading
+import time 
 
 from langchain.tools import tool
 
@@ -13,7 +15,6 @@ def add_note(note: str) -> None:
     """
     Saves a note on a recipe
 
-    recipe: Name of the recipe 
     note: The note that should be saved
     """
 
@@ -44,4 +45,25 @@ def read_notes() -> str:
     except Exception as e:
         print(f"something went wrong: {e}")
         raise         
+
+@tool
+def set_timer(seconds: int) -> None:
+    """
+    Sets a timer for specified time
+    
+    seconds: number of seconds to set time
+    """
+    print(f"Setting {seconds} second timer")
+
+    try:
+        def _play():
+            for _ in range(10):
+                os.system(f'afplay "/System/Library/Sounds/Ping.aiff"')
+                time.sleep(.3)
+        
+        threading.Timer(seconds, _play).start()
+    except Exception as e:
+        print(f"something went wrong: {e}")
+        raise  
+
 
